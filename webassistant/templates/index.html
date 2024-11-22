@@ -1,15 +1,90 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Платформа Студенческих Наставников</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
-<body>
-<li class="nav-item">
-      <a class="nav-link" href="{% url 'logout' %}">
-        <span style="font-weight: bold;">Выйти</span>
-      </a>
-    </li>
+
+<body class="bg-[#F0F4FF] text-[#333333]">
+    <!-- Навигация -->
+    <nav class="bg-[#154385] text-white fixed w-full top-0 shadow-md">
+        <div class="container mx-auto flex justify-between items-center py-5 px-6">
+            <div class="text-2xl font-bold">ИКТИБ ЮФУ</div>
+            <div class="space-x-6">
+                <a href="{% url 'login'  %}" class="hover:text-[#FFC107]">Вход</a>
+                <a href="{% url 'reg'  %}" class="bg-[#FFC107] text-[#154385] px-4 py-2 rounded-lg hover:bg-[#e0a700]">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Баннер -->
+    <section class="mt-16 bg-[#154385] text-white text-center py-20">
+        <div class="container mx-auto">
+            <h1 class="text-4xl font-bold mb-4">Свяжитесь со Студенческими Наставниками</h1>
+            <p class="text-lg mb-8">Получите информацию от текущих студентов о поступлении, учебе и жизни в университете.</p>
+            <a  href="{% url 'reg'  %}" >
+            <button  class="bg-[#FFC107] text-[#154385] px-6 py-3 rounded-lg hover:bg-[#e0a700] text-xl">Присоединиться</button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Особенности -->
+    <section class="py-3 mt-12 ">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+                <i class="fas fa-comments fa-3x text-[#154385] mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Интерактивные Вопросы и Ответы</h3>
+                <p>Участвуйте в реальном времени в беседах с наставниками.</p>
+            </div>
+            <div>
+                <i class="fas fa-user-friends fa-3x text-[#154385] mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Студенческое Сообщество</h3>
+                <p>Присоединяйтесь к поддерживающему сообществу учащихся.</p>
+            </div>
+            <div>
+                <i class="fas fa-chart-line fa-3x text-[#154385] mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Отслеживайте Свой Прогресс</h3>
+                <p>Следите за своими запросами и получайте своевременные ответы.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="bg-[#154385] text-white py-8 mt-12">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+                <h4 class="text-lg font-bold mb-3">Быстрые ссылки</h4>
+                <ul>
+                    <li><a href="#" class="hover:text-[#FFC107]">Часто задаваемые вопросы</a></li>
+                    <li><a href="#" class="hover:text-[#FFC107]">Политика конфиденциальности</a></li>
+                    <li><a href="#" class="hover:text-[#FFC107]">Условия использования</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-3">Следите за нами</h4>
+                <div class="text-center space-x-4 fa-2x ">
+                    <a href="#" class="hover:text-[#FFC107]"><i class="fab fa-vk"></i></a>
+                    <a href="#" class="hover:text-[#FFC107]"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="hover:text-[#FFC107]"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-3">Свяжитесь с нами</h4>
+                <p>Email: support@sfedumentor.com</p>
+                <p>Телефон: +7(900) 000 00 00</p>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>

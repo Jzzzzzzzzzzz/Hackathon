@@ -20,13 +20,9 @@
             <div class="input-group">
                 <label for="username" class="input-label">Логин</label>
                 <input type="text" id="username" name="username" class="input-field" placeholder="Введите ваш логин" required>
-                {% if form.username.errors %}
-                    <div class="error-message">
-                        {% for error in form.username.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                {% if error %}
+                        <div class="form-label bg-warning" style="margin: 10px 0px;">{{ error }}</div>
+                    {% endif %}
             </div>
 
             <!-- Поле Email -->
