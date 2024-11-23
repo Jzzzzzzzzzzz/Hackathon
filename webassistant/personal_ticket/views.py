@@ -35,35 +35,7 @@ def close_ticket(request, ticket_id):
         ticket.save()
         messages.success(request, f"Тикет '{ticket.title}' успешно закрыт.")
     return redirect('profile_ticket_list')
-#
-# def create_ticket(request):
-#     def ticket_create(request):
-#         if request.method == 'POST':
-#             form = TicketForm(request.POST)
-#             if form.is_valid():
-#                 ticket = form.save(commit=False)
-#                 if request.user.is_authenticated:
-#                     ticket.author = request.user  # Привязываем автором текущего пользователя
-#                 ticket.save()
-#                 return redirect('index')  # Или другая страница
-#         else:
-#             form = TicketForm()
-#         return render(request, 'create.html', {'form': form})
 
-
-# def create_ticket(request):
-#     if request.method == 'POST':
-#         form = TicketForm(request.POST)
-#         if form.is_valid():
-#             ticket = form.save(commit=False)  # Создаем объект тикета, но не сохраняем еще в базу
-#             category_id = form.cleaned_data['category']  # Получаем ID категории из формы
-#             category = Category.objects.get(id=category_id)  # Получаем объект категории по ID
-#             ticket.category = category  # Присваиваем объект Category в поле category
-#             ticket.save()  # Сохраняем тикет в базе данных
-#             return redirect('profile_ticket_list')  # Перенаправляем после успешного создания тикета
-#     else:
-#         form = TicketForm()
-#     return render(request, 'create.html', {'form': form})
 
 
 def create_ticket(request):
