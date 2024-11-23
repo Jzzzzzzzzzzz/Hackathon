@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница тикета</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .bg-primary {
+            background-color: #154385;
+        }
+
+        .text-primary {
+            color: #154385;
+        }
+
+        .bg-accent {
+            background-color: #FFC107;
+        }
+
+        .text-accent {
+            color: #FFC107;
+        }
+
+        .chat-message {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 10px;
+            max-width: 75%;
+            border: 1px solid #E0E0E0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-message.mine {
+            background-color: #154385;
+            color: white;
+            border: none;
+        }
+
+        .chat-input {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 8px 16px;
+            border: 2px solid #E0E0E0;
+            margin-right: 0.5rem;
+            width: 80%;
+        }
+
+        .file-input {
+            visibility: hidden;
+            position: absolute;
+        }
+
+        .chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .clear-both {
+            clear: both;
+        }
+
+        .fab.fa-xmark {
+            font-size: 1.5rem;
+            color: #FF3B30;
+            cursor: pointer;
+        }
+
+        .fab.fa-xmark:hover {
+            color: #E02A28;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F0F4FF] text-[#333333]">
+    <div class="container mx-auto p-6">
+        <!-- Заголовок и описание вопроса -->
+        <div class="bg-white p-12 shadow-lg rounded-lg mb-6 flex justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-primary">Тикет: Процедура поступления</h1>
+                <p class="text-gray-700">Описание вопроса: Какие документы необходимы для поступления, и каковы сроки подачи заявок?</p>
+            </div>
+            <div>
+                <button class="fab fa-xmark"></button>
+            </div>
+        </div>
+
+        <!-- Область переписки -->
+        <div class="bg-white p-12 shadow-lg rounded-lg mb-20">
+            <h2 class="text-2xl font-bold text-primary mb-4">Переписка</h2>
+            <div class="chat-container space-y-4 mb-4" id="messages">
+                {% for message in messages %}
+                    <div class="chat-message {% if message.user == user %}mine{% endif %}">
+                        <p class="text-sm"><strong>{{ message.user.username }}:</strong> {{ message.text }}</p>
+                    </div>
+                {% empty %}
+                    <p class="text-gray-500">Нет сообщений.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Поле для ввода сообщения и кнопки -->
+            <form id="message-form" method="POST">
+                {% csrf_token %}
+                <div class="flex items-center">
+                    <textarea id="chat-message-input" name="text" class="chat-input flex-1" rows="3" placeholder="Введите ваше сообщение..."></textarea>
+                    <label for="file-upload" class="bg-accent text-white px-4 py-2 rounded-full hover:bg-yellow-600 cursor-pointer mr-2">
+                        <i class="fas fa-paperclip"></i>
+                    </label>
+                    <input id="file-upload" type="file" class="file-input">
+                    <button type="submit" id="chat-message-submit" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-yellow-600">
+                        <i class="fas fa-paper-plane"></i> Отправить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('message-form').onsubmit = function(e) {
+            e.preventDefault();
+            const messageInput = document.getElementById('chat-message-input');
+            const messageText = messageInput.value;
+
+            // Проверка на пустое сообщение
+            if (!messageText.trim()) {
+                alert("Введите сообщение");
+                return;
+            }
+
+            const formData = new FormData(this);
+
+            fetch("{% url 'ticket_detail' ticket.id %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message && data.user) {
+                    const messagesContainer = document.getElementById('messages');
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('chat-message', 'mine');
+                    messageDiv.innerHTML = `<p class="text-sm"><strong>${data.user}:</strong> ${data.message}</p>`;
+                    messagesContainer.appendChild(messageDiv);
+                    messageInput.value = '';
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                } else {
+                    console.error('Ошибка получения данных');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+        };
+    </script>
+</body>
+
+</html>

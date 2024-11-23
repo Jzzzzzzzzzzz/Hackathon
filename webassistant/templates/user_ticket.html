@@ -75,11 +75,14 @@
                     {% for ticket in tickets %}
                     <li class="px-4 py-4 sm:px-6">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <h2 class="text-xl font-medium text-[#154385] truncate">{{ ticket.title }}</h2>
-                                <p class="text-sm text-gray-500">Категория: {{ ticket.category.name }}</p>
-                                <p class="text-sm text-gray-500">Создан: {{ ticket.created_at|date:"d.m.Y" }}</p>
-                            </div>
+                            <a href="{% url 'ticket_detail' ticket_id=ticket.id %}">
+
+                                <div>
+                                    <h2 class="text-xl font-medium text-[#154385] truncate">{{ ticket.title }}</h2>
+                                    <p class="text-sm text-gray-500">Категория: {{ ticket.category.name }}</p>
+                                    <p class="text-sm text-gray-500">Создан: {{ ticket.created_at|date:"d.m.Y" }}</p>
+                                </div>
+                             </a>
                             <div>
                                 <p class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                     {{ ticket.get_status_display }}
